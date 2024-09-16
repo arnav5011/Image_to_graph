@@ -50,8 +50,11 @@ with open("Bezier Equations.txt", 'w') as file:
 #Load image- The less complex the image the better
 image = cv2.imread('image.png', cv2.IMREAD_GRAYSCALE)
 
+width = 800
+height = 600
+
 #Resize the image to reduce complexity
-resized_image = cv2.resize(image, (800, 600)) #Feel free to change this based on requirements
+resized_image = cv2.resize(image, (width, height)) #Feel free to change this based on requirements
 
 #Apply Gaussian blur to reduce noise to get clearer image
 blurred_image = cv2.GaussianBlur(resized_image, (5, 5), 0) #Feel Free to change this based on requirements
@@ -107,7 +110,9 @@ for filtered_points in filtered_points_list:
         bezier_points = [bezier(t, curve) for t in t_values]
         bezier_points = np.array(bezier_points)
         plt.plot(bezier_points[:, 0], bezier_points[:, 1])
-
+with open('Bezier Equations.txt', 'a') as file:
+        file.write(f'y = {-1 * height} {{0<=x<={width}}}\n')
+        file.write(f'x = {height} {{{-1 * height}<=y<=0}}\n')
 # Final plot adjustments
 plt.gca().invert_yaxis()
 plt.title('Bezier Curves Fitted to Approximate Contours')
