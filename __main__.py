@@ -99,8 +99,8 @@ for filtered_points in filtered_points_list:
     for curve in curves:
         x_eq, y_eq = bezier_equation(curve)
         with open('Bezier Equations.txt', 'a') as file:
-            file.write(f'({x_eq}, {y_eq})\n')
-        print(f'({x_eq}, {y_eq})')
+            file.write(f'({x_eq}, -({y_eq}))\n')
+        print(f'({x_eq}, -{y_eq})')
 
         # Plot the Bezier curve
         t_values = np.linspace(0, 1, 100)
