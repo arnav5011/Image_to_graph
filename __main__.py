@@ -111,8 +111,10 @@ for filtered_points in filtered_points_list:
         bezier_points = np.array(bezier_points)
         plt.plot(bezier_points[:, 0], bezier_points[:, 1])
 with open('Bezier Equations.txt', 'a') as file:
-        file.write(f'y = {-1 * height} {{0<=x<={width}}}\n')
-        file.write(f'x = {height} {{{-1 * height}<=y<=0}}\n')
+        a = "y = " + str(-1*height) + "\left\{0<=x<=" + str(width) + "\\right\}"
+        b = "x = " + str(width) + "\left\{" + str(-1 * height) + "<=y<=0\\right\}"
+        file.write(f"{a}\n")
+        file.write(f"{b}\n")
 # Final plot adjustments
 plt.gca().invert_yaxis()
 plt.title('Bezier Curves Fitted to Approximate Contours')
