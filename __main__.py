@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.special import comb
 
-def bezier(t, points):
-    """Compute a point in a Bezier curve given control points and parameter t."""
+def bezeir(t, points):
+    """Compute a point in a bezeir curve given control points and parameter t."""
     n = len(points) - 1
     point = np.zeros(2)
     for i in range(n + 1):
@@ -12,8 +12,8 @@ def bezier(t, points):
         point += binomial_coeff * ((1 - t) ** (n - i)) * (t ** i) * np.array(points[i])
     return point
 
-def bezier_equation(points):
-    """Generate Desmos-compatible Bezier curve equations. Ensure Desmos y-axis is inverted"""
+def bezeir_equation(points):
+    """Generate Desmos-compatible bezeir curve equations. Ensure Desmos y-axis is inverted"""
     n = len(points) - 1
     x_terms = []
     y_terms = []
@@ -38,14 +38,14 @@ def filter_points(points, min_dist=5):
             filtered_points.append(point)
     return filtered_points
 
-def fit_bezier_curve(points, group_size=3):
-    """Fit Bezier curves with smaller groups of points."""
+def fit_bezeir_curve(points, group_size=3):
+    """Fit bezeir curves with smaller groups of points."""
     curves = []
     for i in range(0, len(points) - group_size + 1, group_size):
         curve_points = points[i:i + group_size + 1]
         curves.append(curve_points)
     return curves
-with open("Bezier Equations.txt", 'w') as file:
+with open("Bezeir Equations.txt", 'w') as file:
     pass
 #Load image- The less complex the image the better
 image = cv2.imread('image.png', cv2.IMREAD_GRAYSCALE)
@@ -95,29 +95,29 @@ for contour in approx_contours:
     filtered_points = filter_points(np.array(points), min_dist=1)# Increasing minimum distance, increases accuracy
     filtered_points_list.append(filtered_points)
 
-#Fit Bezier curves to each contour segment
+#Fit bezeir curves to each contour segment
 for filtered_points in filtered_points_list:
-    curves = fit_bezier_curve(filtered_points, group_size=4)  # Adjust group_size for finer curves
+    curves = fit_bezeir_curve(filtered_points, group_size=4)  # Adjust group_size for finer curves
     
     for curve in curves:
-        x_eq, y_eq = bezier_equation(curve)
-        with open('Bezier Equations.txt', 'a') as file:
+        x_eq, y_eq = bezeir_equation(curve)
+        with open('bezeir Equations.txt', 'a') as file:
             file.write(f'({x_eq}, -({y_eq}))\n')
         print(f'({x_eq}, -{y_eq})')
 
-        # Plot the Bezier curve
+        # Plot the bezeir curve
         t_values = np.linspace(0, 1, 100)
-        bezier_points = [bezier(t, curve) for t in t_values]
-        bezier_points = np.array(bezier_points)
-        plt.plot(bezier_points[:, 0], bezier_points[:, 1])
-with open('Bezier Equations.txt', 'a') as file:
+        bezeir_points = [bezeir(t, curve) for t in t_values]
+        bezeir_points = np.array(bezeir_points)
+        plt.plot(bezeir_points[:, 0], bezeir_points[:, 1])
+with open('bezeir Equations.txt', 'a') as file:
         a = "y = " + str(-1*height) + "\left\{0<=x<=" + str(width) + "\\right\}"
         b = "x = " + str(width) + "\left\{" + str(-1 * height) + "<=y<=0\\right\}"
         file.write(f"{a}\n")
         file.write(f"{b}\n")
 # Final plot adjustments
 plt.gca().invert_yaxis()
-plt.title('Bezier Curves Fitted to Approximate Contours')
+plt.title('Bezeir Curves Fitted to Approximate Contours')
 plt.xlabel('X-axis')
 plt.ylabel('Y-axis')
 plt.savefig('Plot.png', format='png')
